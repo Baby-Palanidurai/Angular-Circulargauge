@@ -1,0 +1,16 @@
+<div class="evNav" id="evNav">
+  <a class="active">Event-Viewer</a>
+<!--
+  <a *ngIf="!isMobile" (click)="showContextMenuClick($event); closeResponsiveMenu()" class="fa fa-ellipsis-v"></a>
+--> 
+  <a (click)="showObjectViewer()">Objekt-Viewer</a>
+  <a (click)="showHome()">Home</a>
+  <a class="icon" (click)="menuToggleClick()">
+    <div class="hamburger" id="myHamburger">
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </a>
+</div>

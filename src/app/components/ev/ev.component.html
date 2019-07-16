@@ -1,0 +1,207 @@
+<app-ev-nav></app-ev-nav>
+<div style="margin:5px">
+	<app-odb-info *ngIf="selectedActiveEventDatas.length == 1" [display]="displayOdbInfo"
+		[objTag]="selectedActiveEventDatas[0].eventStateInfo.objTag"
+		(displayChange)="onOdbInfoDialogDisplayChange($event)"></app-odb-info>
+	<app-notice-edit [display]="displayNoticeEdit" [noticeSubject]="noticeSubject" (onOk)="onNoticeEditDialogOk($event)"
+		(displayChange)="onNoticeEditDialogDisplayChange($event)"></app-notice-edit>
+
+	<div class="grid" *ngIf="!isMobile">
+		<!--
+		<p-table #table [columns]="tableCols" [value]="activeEventData" [responsive]="false" sortField="eventStateInfo.comeTimeText"
+		 [sortOrder]="-1" resizableColumns="true" [loading]="activeEventsLoading" loadingIcon="pi pi-spinner" selectionMode="multiple"
+		 [(selection)]="selectedActiveEventDatas" (onRowSelect)="onRowSelect($event)" (onRowUnselect)="onRowUnselect($event)"
+		 (onRowClick)="onRowClick($event)" scrollable="true" [scrollHeight]="tableScrollHeight" [style]="{'width':'99,5vw', 'word-break':'break-all', 'word-wrap':'break-word'}"
+		 [paginator]="true" [rows]="100" [alwaysShowPaginator]="false" (sortFunction)="customSort($event)" [customSort]="true"
+		 [metaKeySelection]="true">
+			<ng-template pTemplate="header" let-columns>
+				<tr>
+					<th *ngFor="let col of columns" [pSortableColumn]="col.sortField" style.width="{{col.width}}" style.text-align="{{col.textAlign}}">
+						{{col.header}}
+						<p-sortIcon [field]="col.sortField"></p-sortIcon>
+					</th>
+				</tr>
+			</ng-template>
+			<ng-template pTemplate="body" let-activeEventData let-columns="columns" let-rowIndex="rowIndex">
+				<tr [style.color]="activeEventData.color" [pSelectableRow]="activeEventData" [pSelectableRowIndex]="rowIndex">
+					<td *ngFor="let col of columns" style.width="{{col.width}}" style.text-align="{{col.textAlign}}">
+						{{activeEventData.eventStateInfo[col.field]}}
+					</td>
+				</tr>
+			</ng-template>
+			<ng-template pTemplate="emptymessage">
+			</ng-template>
+		</p-table>
+-->
+
+		<!--
+<ejs-grid #grid [dataSource]='activeEventData | ejsdeepwatch:grid:"dataSource":false'
+-->
+
+		<ejs-grid #grid [dataSource]='activeEventData | ejsdeepwatch:grid:"dataSource":false' rowHeight="30"
+			[allowPaging]="false" [allowSorting]="true" [allowSelection]="true" [height]="gridHeight"
+			[enableVirtualization]="true" [selectionSettings]="gridSelectionSettings" [pageSettings]="gridPageSettings"
+			[sortSettings]="gridSortSettings" width="99,5%" gridLines="Both" [contextMenuItems]="contextMenuItems"
+			[allowResizing]="true" (contextMenuClick)="contextMenuItemSelected($event)"
+			(rowSelected)="onRowSelected($event)" (dataBound)="gridDatabound($event)">
+			<e-columns>
+				<e-column field="eventStateInfo.msgText" headerText="Meldetext" textAlign="Left" width="400px"
+					minWidth="20px" clipMode="EllipsisWithTooltip">
+					<ng-template #template let-activeEventData>
+						<span [style.color]="activeEventData.color">
+							{{activeEventData.eventStateInfo.msgText}}
+						</span>
+					</ng-template>
+				</e-column>
+				<e-column field="eventStateInfo.stateText" headerText="Status-Meldetext" textAlign="Center"
+					width="200px" minWidth="20px" clipMode="EllipsisWithTooltip">
+					<ng-template #template let-activeEventData>
+						<span [style.color]="activeEventData.color">
+							{{activeEventData.eventStateInfo.stateText}}
+						</span>
+					</ng-template>
+				</e-column>
+				<e-column field="eventStateInfo.eventStateText" headerText="Ereignis-Status" textAlign="Center"
+					width="150px" minWidth="20px" clipMode="EllipsisWithTooltip">
+					<ng-template #template let-activeEventData>
+						<span [style.color]="activeEventData.color">
+							{{activeEventData.eventStateInfo.eventStateText}}
+						</span>
+					</ng-template>
+				</e-column>
+				<e-column field="eventStateInfo.prio" headerText="Priorität" textAlign="Center" width="120px"
+					minWidth="20px" clipMode="EllipsisWithTooltip">
+					<ng-template #template let-activeEventData>
+						<span [style.color]="activeEventData.color">
+							{{activeEventData.eventStateInfo.prio}}
+						</span>
+					</ng-template>
+				</e-column>
+				<e-column field="eventStateInfo.objName" headerText="Benutzeradresse" textAlign="Left" width="400px"
+					minWidth="20px" clipMode="EllipsisWithTooltip" [visible]="!global.hideObjName" isPrimaryKey="true">
+					<ng-template #template let-activeEventData>
+						<span [style.color]="activeEventData.color">
+							{{activeEventData.eventStateInfo.objName}}
+						</span>
+					</ng-template>
+				</e-column>
+				<e-column field="comeTimeCompareEntry" headerText="Ereignis kommend" textAlign="Center" width="200px"
+					minWidth="20px" clipMode="EllipsisWithTooltip" [sortComparer]="gridSortComparerComeTime">
+					<ng-template #template let-activeEventData>
+						<span [style.color]="activeEventData.color">
+							{{activeEventData.eventStateInfo.comeTimeText}}
+						</span>
+					</ng-template>
+				</e-column>
+				<e-column field="goTimeCompareEntry" headerText="Ereignis gehend" textAlign="Center" width="200px"
+					minWidth="20px" clipMode="EllipsisWithTooltip" [sortComparer]="gridSortComparerGoTime">
+					<ng-template #template let-activeEventData>
+						<span [style.color]="activeEventData.color">
+							{{activeEventData.eventStateInfo.goTimeText}}
+						</span>
+					</ng-template>
+				</e-column>
+				<e-column field="ackToOffNormalTimeCompareEntry" headerText="Quittierung ToOffNormal" textAlign="Center"
+					width="220px" minWidth="20px" clipMode="EllipsisWithTooltip"
+					[sortComparer]="gridSortComparerAckToOffNormalTime">
+					<ng-template #template let-activeEventData>
+						<span [style.color]="activeEventData.color">
+							{{activeEventData.eventStateInfo.ackToOffNormalTimeText}}
+						</span>
+					</ng-template>
+				</e-column>
+				<e-column field="ackToFaultTimeCompareEntry" headerText="Quittierung ToFault" textAlign="Center"
+					width="220px" minWidth="20px" clipMode="EllipsisWithTooltip"
+					[sortComparer]="gridSortComparerAckToFaultTime">
+					<ng-template #template let-activeEventData>
+						<span [style.color]="activeEventData.color">
+							{{activeEventData.eventStateInfo.ackToFaultTimeText}}
+						</span>
+					</ng-template>
+				</e-column>
+				<e-column field="ackToNormalTimeCompareEntry" headerText="Quittierung ToNormal" textAlign="Center"
+					width="220px" minWidth="20px" clipMode="EllipsisWithTooltip"
+					[sortComparer]="gridSortComparerAckToNormalTime">
+					<ng-template #template let-activeEventData>
+						<span [style.color]="activeEventData.color">
+							{{activeEventData.eventStateInfo.ackToNormalTimeText}}
+						</span>
+					</ng-template>
+				</e-column>
+				<e-column field="eventStateInfo.evCnt" headerText="Ereigniszähler" textAlign="Center" width="150px"
+					minWidth="20px" clipMode="EllipsisWithTooltip">
+					<ng-template #template let-activeEventData>
+						<span [style.color]="activeEventData.color">
+							{{activeEventData.eventStateInfo.evCnt}}
+						</span>
+					</ng-template>
+				</e-column>
+				<e-column field="eventStateInfo.lastAckPersonName" headerText="Benutzer" textAlign="Left" width="200px"
+					minWidth="20px" clipMode="EllipsisWithTooltip">
+					<ng-template #template let-activeEventData>
+						<span [style.color]="activeEventData.color">
+							{{activeEventData.eventStateInfo.lastAckPersonName}}
+						</span>
+					</ng-template>
+				</e-column>
+				<e-column field="eventStateInfo.evGroupText" headerText="Meldungsklasse / Notification-Class"
+					textAlign="Left" width="300px" minWidth="20px" clipMode="EllipsisWithTooltip">
+					<ng-template #template let-activeEventData>
+						<span [style.color]="activeEventData.color">
+							{{activeEventData.eventStateInfo.evGroupText}}
+						</span>
+					</ng-template>
+				</e-column>
+				<e-column field="eventStateInfo.objGroupText" headerText="Orts-/Anlagenkennung" textAlign="Left"
+					width="450px" minWidth="20px" clipMode="EllipsisWithTooltip">
+					<ng-template #template let-activeEventData>
+						<span [style.color]="activeEventData.color">
+							{{activeEventData.eventStateInfo.objGroupText}}
+						</span>
+					</ng-template>
+				</e-column>
+			</e-columns>
+		</ejs-grid>
+	</div>
+	<div class="gridMobile" *ngIf="isMobile && !activeEventsLoading">
+		<ejs-listview #listView id="listView" [dataSource]="activeEventData" [showHeader]="false"
+			ngClass="e-list-template" [enableVirtualization]="true" [height]="listViewHeight" [fields]="listViewFields"
+			(actionBegin)="listViewActionBegin()" (actionComplete)="listViewActionComplete()">
+			<ng-template #template let-activeEventData>
+				<div class="e-list-wrapper e-list-multi-line">
+					<span class="e-list-content"
+						[style.color]="activeEventData.color"><strong>{{activeEventData.eventStateInfo.msgText}}</strong></span>
+					<span class="e-list-content button-group">
+						<button type="Button" [disabled]="true"
+							ngClass="e-control e-btn e-danger e-round-corner e-block"
+							style="font-weight:bold">{{activeEventData.eventStateInfo.stateText}}
+						</button>
+						<button id="contextMenuButton" type="Button"
+							ngClass="e-control e-btn e-success e-round-corner mobile-option-button"
+							(click)="selectedActiveEventDatas=[activeEventData];openContextMenu($event);">
+							<i class="fa fa-ellipsis-v"></i>
+						</button>
+					</span>
+					<span class="e-list-content"
+						[style.color]="activeEventData.color">{{activeEventData.eventStateInfo.eventStateText}}</span>
+					<span *ngIf="!global.hideObjName" class="e-list-content"
+						[style.color]="activeEventData.color">{{activeEventData.eventStateInfo.objName}}</span>
+					<span class="e-list-content"
+						[style.color]="activeEventData.color">{{activeEventData.eventStateInfo.comeTimeText}}
+						| {{activeEventData.eventStateInfo.goTimeText}}</span>
+					<span class="e-list-content"
+						[style.color]="activeEventData.color">{{activeEventData.eventStateInfo.ackToOffNormalTimeText}}
+						| {{activeEventData.eventStateInfo.ackToFaultTimeText}} |
+						{{activeEventData.eventStateInfo.ackToNormalTimeText}}</span>
+					<span class="e-list-content" [style.color]="activeEventData.color"
+						ngClass="user-icon">{{activeEventData.eventStateInfo.lastAckPersonName}}</span>
+					<span class="e-list-content" [style.color]="activeEventData.color"
+						ngClass="objTypeNotificationClass-icon">{{activeEventData.eventStateInfo.evGroupText}}</span>
+				</div>
+			</ng-template>
+		</ejs-listview>
+	</div>
+	<ejs-contextmenu #contextmenu [items]="contextMenuItems" (beforeOpen)="contextMenuBeforeOpen($event)"
+		(select)="contextMenuItemSelected($event)">
+	</ejs-contextmenu>
+</div>

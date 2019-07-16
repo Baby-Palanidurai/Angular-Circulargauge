@@ -1,0 +1,32 @@
+.grid {
+  z-index: 0;
+}
+ 
+.e-grid .e-spinner-pane.e-spin-show {
+  display: none !important;
+}
+
+.gridMobile {
+  z-index: 0;
+  // Its reduced from 50px to 30px for avoiding the odd looking at bottom of the page (from syncfusion!)
+  margin-bottom: 30px;
+}
+ 
+.button-group {
+  display: flex !important;
+}
+
+.user-icon:before {
+  content: url('~/assets/BusinessUserMale_16.png');
+} 
+
+#listView.e-listview.e-list-template .e-list-wrapper.e-list-multi-line .e-list-content:not(.e-text-overflow) {
+  white-space: normal !important;
+}
+
+/* grauer Background bei selektion eines ListView Items ausblenden!
+#listView .e-hover, #listView .e-active {
+  background-color: transparent !important;
+}
+*/
+

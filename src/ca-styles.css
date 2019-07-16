@@ -1,0 +1,363 @@
+body {
+    margin: 0px;
+    font-family: segoe ui, Arial, sans-serif !important;
+    font-size: 16px !important;
+}
+
+.ui-tree {
+    width: 95%;
+    height:100%;
+}
+
+.treenode {
+    display: flex;
+    height: 40px;
+    align-items: center;
+}
+
+.tree-informationcenter-icon:before {
+    content: url('~/assets/Tree_ISP_16.png');
+} 
+        
+.tree-switchpanel-icon:before {
+    content: url('~/assets/Tree_SS_16.png');
+} 
+
+.tree-plant-icon:before {
+    content: url('~/assets/Tree_Anl_16.png');
+} 
+
+.tree-partialplant-icon:before {
+    content: url('~/assets/Tree_TAN_16.png');
+} 
+    
+.tree-functionalgroup-icon:before {
+    content: url('~/assets/Tree_FG_16.png');
+} 
+
+.tree-operatingresource-icon:before {
+    content: url('~/assets/Tree_BM_16.png');
+} 
+
+.grid-mobile-image {
+    width: 17px;
+    height: 17px;
+    border:1px solid rgb(220, 220, 220);
+    float: left;
+    margin: 1px;
+}
+
+.up-icon:before {
+    content: url('~/assets/Up_16.png');
+} 
+
+.down-icon:before {
+    content: url('~/assets/Down_16.png');
+} 
+
+.status_Prio1-icon:before {
+    content: url('~/assets/Status_Prio1_16.png');
+} 
+
+.status_Prio2-icon:before {
+    content: url('~/assets/Status_Prio2_16.png');
+} 
+
+.status_Prio3-icon:before {
+    content: url('~/assets/Status_Prio3_16.png');
+} 
+
+.status_Prio4-icon:before {
+    content: url('~/assets/Status_Prio4_16.png');
+} 
+
+.status_Prio5-icon:before {
+    content: url('~/assets/Status_Prio5_16.png');
+} 
+
+.status_Prio6-icon:before {
+    content: url('~/assets/Status_Prio6_16.png');
+} 
+
+.status_Prio7-icon:before {
+    content: url('~/assets/Status_Prio7_16.png');
+} 
+
+.status_Prio8-icon:before {
+    content: url('~/assets/Status_Prio8_16.png');
+} 
+
+.status_Prio9-icon:before {
+    content: url('~/assets/Status_Prio9_16.png');
+} 
+
+.status_Prio10-icon:before {
+    content: url('~/assets/Status_Prio10_16.png');
+} 
+
+.status_Prio11-icon:before {
+    content: url('~/assets/Status_Prio11_16.png');
+} 
+
+.status_Prio12-icon:before {
+    content: url('~/assets/Status_Prio12_16.png');
+} 
+
+.status_Prio13-icon:before {
+    content: url('~/assets/Status_Prio13_16.png');
+} 
+
+.status_Prio14-icon:before {
+    content: url('~/assets/Status_Prio14_16.png');
+} 
+
+.status_Prio15-icon:before {
+    content: url('~/assets/Status_Prio15_16.png');
+} 
+
+.status_Prio16-icon:before {
+    content: url('~/assets/Status_Prio16_16.png');
+} 
+
+.status_PrioLifeSafety-icon:before {
+    content: url('~/assets/Status_PrioLifeSafety_16.png');
+} 
+
+.status_PrioManual-icon:before {
+    content: url('~/assets/Status_PrioManual_16.png');
+} 
+
+.status_PrioSchedule-icon:before {
+    content: url('~/assets/Status_PrioSchedule_16.png');
+} 
+
+.status_PrioUnitProtect-icon:before {
+    content: url('~/assets/Status_PrioUnitProtect_16.png');
+} 
+
+.status-InAlActive-icon:before {
+    content: url('~/assets/Status_InAlActive_16.png');
+} 
+
+.status-InAlActiveAcked-icon:before {
+    content: url('~/assets/Status_InAlActiveAcked_16.png');
+} 
+
+.status-InAlInactiveNotAcked-icon:before {
+    content: url('~/assets/Status_InAlInactiveNotAcked_16.png');
+} 
+
+.status-FltActive-icon:before {
+    content: url('~/assets/Status_FltActive_16.png');
+} 
+
+.status-FltActiveAcked-icon:before {
+    content: url('~/assets/Status_FltActiveAcked_16.png');
+} 
+
+.status-FltInactiveNotAcked-icon:before {
+    content: url('~/assets/Status_FltInactiveNotAcked_16.png');
+} 
+
+.status-OffL-icon:before {
+    content: url('~/assets/Status_OffL_16.png');
+} 
+
+.status-OoS-icon:before {
+    content: url('~/assets/Status_OoS_16.png');
+} 
+
+.status-Ovr-icon:before {
+    content: url('~/assets/Status_Ovr_16.png');
+} 
+
+.odbInfo-icon:before {
+    content: url('~/assets/ObjectInfo_16.png');
+}
+
+.objectBox-icon:before {
+    content: url('~/assets/ObjectBox_16.png');
+}
+
+.objTypeNotificationClass-icon:before {
+    content: url('~/assets/ObjType_Notification_Class.png');
+}
+
+.objectViewer-icon:before {
+    content: url('~/assets/ObjectViewer_16.png');
+}
+
+.send2io32-icon {
+    width: 32px !important;
+    height: 32px !important;
+    margin-right: 5px !important;
+    content: url('~/assets/Send2IO_32.png');
+}
+
+.mobile-option-button {
+    float: right !important;
+    margin-left: 3px !important;
+}
+
+/*
+.hamburger {
+    width: 20px;
+    height: 2px;
+    background-color: white;
+    margin: 5px 0;
+}
+*/
+
+.hamburger {
+    width: 25px;
+    height: 20px;
+    position: relative;
+    margin: 0px auto;
+    -webkit-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+    -webkit-transition: .5s ease-in-out;
+    -moz-transition: .5s ease-in-out;
+    -o-transition: .5s ease-in-out;
+    transition: .5s ease-in-out;
+    cursor: pointer;
+  }
+
+.hamburger span {
+    display: block;
+    position: absolute;
+    height: 2px;
+    width: 100%;
+    background: white;
+    border-radius: 2px;
+    opacity: 1;
+    left: 0;
+    -webkit-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+    -webkit-transition: .25s ease-in-out;
+    -moz-transition: .25s ease-in-out;
+    -o-transition: .25s ease-in-out;
+    transition: .25s ease-in-out;
+ }
+
+ .hamburger span:nth-child(1) {
+    top: 0px;
+ }
+  
+ .hamburger span:nth-child(2),.hamburger span:nth-child(3) {
+    top: 8px;
+ }
+  
+ .hamburger span:nth-child(4) {
+    top: 16px;
+}
+  
+.hamburger.open span:nth-child(1) {
+    top: 8px;
+    width: 0%;
+    left: 50%;
+}
+  
+.hamburger.open span:nth-child(2) {
+    -webkit-transform: rotate(45deg);
+    -moz-transform: rotate(45deg);
+    -o-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+  
+.hamburger.open span:nth-child(3) {
+    -webkit-transform: rotate(-45deg);
+    -moz-transform: rotate(-45deg);
+    -o-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+}
+  
+.hamburger.open span:nth-child(4) {
+    top: 8px;
+    width: 0%;
+    left: 50%;
+}
+
+.e-round-corner {
+    border-radius: 2px;
+}
+
+/* Großschreibung (uppercase) bei Syncfusion-Buttons ausschalten */
+.e-btn {
+    text-transform: none !important;
+}
+
+/* Syncfusion Dialog-Höhe auf volle Höhe setzen*/
+.e-dialog {
+    max-height: 100% !important;
+}
+
+/* Syncfusion Toast benötigte Einstellungen, damit Toast not overlay sondern in Div als statische Message verwendet werden kann*/
+.e-toast-container {
+    z-index: 0 !important;
+    position: relative !important;
+}
+
+.dropdownlistObjBoxStateTexts {
+    text-align: center;
+    font-weight: bold;
+}
+
+.dropdownlistObjBoxStateTexts.e-ddl input.e-input {
+    text-align: center;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+
+.dropdownlistNoticePrio {
+    text-align: center;
+    font-weight: normal;
+}
+
+.dropdownlistNoticePrio.e-ddl input.e-input {
+    text-align: center;
+    font-weight: normal;
+}
+
+/* Syncfusion: Scrollbar bei WindowScroll ausblenden, wenn Dialog offen */
+/* Wird momentan nicht benötigt, das ListView und Grid mit ContainerScroll und nicht mit WindowScroll betrieben werden! */
+/*
+.e-scroll-disabled {
+    overflow: hidden !important;
+}
+*/
+
+/* Button-light-Farben für !Commandable */
+.e-btn.e-danger-light, .e-btn.e-danger-light:hover {
+    background-color: rgba(92, 184, 92, 0.65);
+    border-color: rgba(204, 204, 204, 0.65);
+    box-shadow: none;
+    color: rgba(255, 255, 255, 0.65);
+}
+
+.e-btn.e-success-light, .e-btn.e-success-light:hover {
+    background-color: rgba(92, 184, 92, 0.65);
+    border-color: rgba(204, 204, 204, 0.65);
+    box-shadow: none;
+    color: rgba(255, 255, 255, 0.65);
+}
+
+/* automatischer Textumbruch und entsprechende Ausrichtung in TreeView bei langen Texten !!! */
+li .e-list-text { 
+    white-space: normal; 
+    word-break: break-word; 
+} 
+  
+.e-treeview .e-list-text { 
+    display: table;
+    margin: -28px 0 0 24px;
+} 
+  
+.e-treeview .e-text-content {
+    padding: 6px 0 3px 24px;
+}
+

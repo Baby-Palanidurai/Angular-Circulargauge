@@ -1,0 +1,65 @@
+<ejs-dialog #odbInfoDialog header="Objekt-Information" showCloseIcon="true" [(visible)]="display" isModal="true"
+  (beforeOpen)="onBeforeOpen($event)" (close)="onClose($event)" [animationSettings]="animationSettings">
+  <ng-template #content>
+    <ejs-tab *ngIf="curOdbInfoData">
+      <e-tabitems>
+        <e-tabitem [header]="headerText[0]">
+          <ng-template #content>
+            <ejs-listview #listViewOdbInfo id="listViewOdbInfo" [dataSource]="curOdbInfoData.odbInfoDataGeneralList"
+              [showHeader]="false" class="e-list-template">
+              <ng-template #template let-item>
+                <div class="e-list-wrapper e-list-multi-line">
+                  <span class="e-list-content"><strong>{{item[0]}}</strong></span>
+                  <span class="e-list-content">{{item[1]}}</span>
+                </div>
+              </ng-template>
+            </ejs-listview>
+          </ng-template>
+        </e-tabitem>
+        <e-tabitem [header]="headerText[1]">
+          <ng-template #content>
+            <ejs-listview #listViewOdbInfo id="listViewOdbInfo" [dataSource]="curOdbInfoData.odbInfoDataObjectList"
+              [showHeader]="false" class="e-list-template">
+              <ng-template #template let-item>
+                <div class="e-list-wrapper e-list-multi-line">
+                  <span class="e-list-content"><strong>{{item[0]}}</strong></span>
+                  <span class="e-list-content">{{item[1]}}</span>
+                </div>
+              </ng-template>
+            </ejs-listview>
+          </ng-template>
+        </e-tabitem>
+        <e-tabitem [header]="headerText[2]" *ngIf="curOdbInfoData.odbInfoDataBindingList && (curOdbInfoData.odbInfoDataBindingList.length > 0)">
+          <ng-template #content>
+            <ejs-listview #listViewOdbInfo id="listViewOdbInfo" [dataSource]="curOdbInfoData.odbInfoDataBindingList"
+              [showHeader]="false" class="e-list-template">
+              <ng-template #template let-item>
+                <div class="e-list-wrapper e-list-multi-line">
+                  <span class="e-list-content"><strong>{{item[0]}}</strong></span>
+                  <span class="e-list-content">{{item[1]}}</span>
+                </div>
+              </ng-template>
+            </ejs-listview>
+          </ng-template>
+        </e-tabitem>
+        <e-tabitem [header]="headerText[3]">
+          <ng-template #content>
+            <ejs-listview #listViewOdbInfo id="listViewOdbInfo" [dataSource]="curOdbInfoData.odbInfoDataObjNameFieldList"
+              [showHeader]="false" class="e-list-template">
+              <ng-template #template let-item>
+                <div class="e-list-wrapper e-list-multi-line">
+                  <span class="e-list-content"><strong>{{item[0]}}</strong></span>
+                  <span class="e-list-content">{{item[1]}}</span>
+                  <span class="e-list-content">{{item[2]}}</span>
+                </div>
+              </ng-template>
+            </ejs-listview>
+          </ng-template>
+        </e-tabitem>
+      </e-tabitems>
+    </ejs-tab>
+  </ng-template>
+  <ng-template #footerTemplate>
+    <button ejs-button type="Button" iconCss="fa fa-check" cssClass="e-success e-round-corner" content="OK" (click)="this.display=false;"></button>
+  </ng-template>
+</ejs-dialog>

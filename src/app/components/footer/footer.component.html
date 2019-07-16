@@ -1,0 +1,6 @@
+<div [ngClass]="isMobile ? 'footer mobile' : 'footer'">
+  <div>
+    <span class="footer-icon user-icon separator-right" (click)="showLoginDialog()"> {{personname}}</span>
+    <span class="footer-icon event-icon" (click)="showEventViewer()"> {{eventCountText}}</span>
+  </div>
+</div>

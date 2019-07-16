@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="de">
+
+<head>
+  <meta charset="utf-8">
+  <title>Mobile Client</title>
+  <base href="./">
+
+  <meta id="myViewport" name="viewport" content="width=device-width, initial-scale=1">
+  <script>
+    if (screen.width <= 320) {
+      var mvp = document.getElementById('myViewport');
+      mvp.setAttribute('content', 'width=device-width, initial-scale=0.85');
+    }
+  </script>
+
+  <meta name="theme-color" content="#000000">
+  <link rel="shortcut icon" href="favicon.ico">
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+
+  <!-- https://github.com/aws/aws-amplify/issues/678 fix: -->
+  <script>
+    if (global === undefined) {
+      var global = window;
+    }
+  </script>
+  <!-- https://github.com/aws/aws-amplify/issues/678 fix end-->
+</head>
+
+<!--
+<body oncontextmenu="return false">
+-->
+
+<body>
+
+  <!--
+  <app-root>Loading...</app-root>
+-->
+
+  <app-root>
+    <div style="margin: 5px">
+      <img src="assets/IF_Mobile_Client_Logo_64.png" style="vertical-align: middle" width="164" height="64"
+        alt="Insight Facilities">
+      wird geladen...
+    </div>
+  </app-root>
+
+  <noscript>
+    <p>
+      Sorry, JavaScript must be enabled to use this app
+    </p>
+  </noscript>
+</body>
+
+</html>

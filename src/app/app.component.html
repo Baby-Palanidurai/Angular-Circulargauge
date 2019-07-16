@@ -1,0 +1,32 @@
+<!-- (window:beforeunload)="onBeforeUnload($event)" -->
+<div #appComponent (window:resize)="onResize($event)">
+	<div *ngIf="closed==false">
+		<div style="margin:5px; padding-top: 50px">
+			<div #container1>
+				<ejs-toast #errorMsg timeOut="0" showCloseButton="true" width="100%" [target]="container1" cssClass="e-toast-danger errorMsg"></ejs-toast>
+			</div>
+			<div #container2>
+				<ejs-toast #maintenanceMsgs timeOut="0" showCloseButton="true" width="100%" [target]="container2" cssClass="e-toast-info maintenanceMsgs"></ejs-toast>
+			</div>
+		</div>
+		<!--
+		<div>
+			<button (click)="destory()">Destroy</button>
+		</div>
+		-->
+		<div class="container">
+			<div class="router-template">
+				<router-outlet></router-outlet>
+			</div>
+		</div>
+		<app-footer></app-footer>
+	</div>
+	<div *ngIf="closed==true">
+		Mobile-Client wurde beendet...
+		<br>
+		<br>
+		<div>
+			<button (click)="start()">Mobile-Client starten</button>
+		</div>
+	</div>
+</div>

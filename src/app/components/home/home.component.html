@@ -1,0 +1,163 @@
+<app-main-nav (showAboutDialog)="aboutDialogClick()" (showLoginDialog)="loginDialogClick()"
+ (showNotificationSettingsDialog)="notificationSettingsDialogClick()"></app-main-nav>
+<div style="margin:5px">
+	<span style="text-align:center">
+		<br>
+		<br>
+		<br>
+		<img src="assets/IF_Mobile_Client_Logo_125.png" class="centerImage" width="310" height="125" alt="Insight Facilities">
+		<h1>CA Computer Automation GmbH</h1>
+	</span>
+</div>
+
+<ejs-dialog #notificationSettingsDialog header="Benachrichtigungen" [animationSettings]="dialogAnimationSettings" showCloseIcon="true"
+ [(visible)]="displayNotificationSettingsDialog" isModal="true" width="300px">
+	<ng-template #content>
+		<div style="text-align:center">
+			<h4>Event-Viewer</h4>
+			<ejs-switch #switch [(ngModel)]="eventViewerNotifications"></ejs-switch>
+		</div>
+	</ng-template>
+	<ng-template #footerTemplate>
+		<button ejs-button type="Button" iconCss="fa fa-check" cssClass="e-success e-round-corner" (click)="notificationSettingsDialogOkClick()"
+		 content="OK"></button>
+	</ng-template>
+</ejs-dialog>
+
+<ejs-dialog #aboutDialog header="Insight Facilities" [animationSettings]="dialogAnimationSettings" showCloseIcon="true"
+ [(visible)]="displayAboutDialog" isModal="true" width="300px">
+	<ng-template #content>
+		<div style="text-align:center">
+			Insight Facilities Release 2.1.0
+			<br>
+			Build 2
+			<br>
+			<br>
+			<a href="https://ca-computer-automation.de" target="_blank">CA Computer Automation GmbH</a>
+			<br> Copyright 2011 - 2019
+		</div>
+	</ng-template>
+	<ng-template #footerTemplate>
+		<button ejs-button type="Button" iconCss="fa fa-check" cssClass="e-success e-round-corner" (click)="aboutDialogOkClick()"
+		 content="OK"></button>
+	</ng-template>
+</ejs-dialog>
+
+<ejs-dialog #loginDialog header="Benutzer anmelden" showCloseIcon="true" [(visible)]="displayLoginDialog" isModal="true"
+ width="300px" (open)="onLoginDialogShow($event)" [animationSettings]="dialogAnimationSettings">
+	<ng-template #content>
+		<div class="col-lg-12 control-section e-input-section">
+			<div class="content-wrapper">
+				<div class="row">
+					<div class="col-lg-12">
+						<label>Benutzername</label>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-12 e-input-group e-float-icon-left">
+						<span class="e-input-group-icon fa fa-user"></span>
+						<div class="e-input-in-wrap">
+							<input #toFocusLogin class="e-input" type="text" [(ngModel)]="username" (focus)="focusInLeft($event.target)"
+							 (blur)="focusOutLeft($event.target)" autofocus />
+						</div>
+					</div>
+				</div>
+				<br>
+				<div class="row">
+					<div class="col-lg-12">
+						<label>Password</label>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-12 e-input-group e-float-icon-left">
+						<span class="e-input-group-icon fa fa-key"></span>
+						<div class="e-input-in-wrap">
+							<input class="e-input" type="password" [(ngModel)]="password" (focus)="focusInLeft($event.target)" (blur)="focusOutLeft($event.target)" />
+						</div>
+						<button ejs-button type="Button" iconCss="fa fa-ellipsis-v" cssClass="e-success e-round-corner" (click)="changePwDialogClick()"
+						 [disabled]="!sessionService.validSession">
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</ng-template>
+	<ng-template #footerTemplate>
+		<button ejs-button type="Button" iconCss="fa fa-unlock" cssClass="e-success e-round-corner" content="Anmelden"
+		 (click)="loginClick()" [disabled]="!sessionService.validSession"></button>
+		<button ejs-button type="Button" iconCss="fa fa-lock" cssClass="e-success e-round-corner" style="margin-left: 5px"
+		 content="Abmelden" (click)="logoutClick()" [disabled]="!sessionService.validSession"></button>
+	</ng-template>
+</ejs-dialog>
+
+<ejs-dialog #changePwDialog header="Passwort ändern" showCloseIcon="true" [(visible)]="displayChangePwDialog" isModal="true"
+ width="300px" (open)="onChangePwDialogShow($event)" [animationSettings]="dialogAnimationSettings">
+	<ng-template #content>
+		<div class="col-lg-12 control-section e-input-section" style="text-align:left">
+			<div class="content-wrapper">
+				<div class="row">
+					<div class="col-lg-12">
+						<label>Benutzername</label>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-12 e-input-group e-float-icon-left">
+						<span class="e-input-group-icon fa fa-user"></span>
+						<div class="e-input-in-wrap">
+							<input #toFocusPwChange class="e-input" type="text" [(ngModel)]="username" (focus)="focusInLeft($event.target)"
+							 (blur)="focusOutLeft($event.target)" autofocus />
+						</div>
+					</div>
+				</div>
+				<br>
+				<div class="row">
+					<div class="col-lg-12">
+						<label>Altes Password</label>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-12 e-input-group e-float-icon-left">
+						<span class="e-input-group-icon fa fa-lock"></span>
+						<div class="e-input-in-wrap">
+							<input class="e-input" type="password" [(ngModel)]="oldPassword" (focus)="focusInLeft($event.target)" (blur)="focusOutLeft($event.target)" />
+						</div>
+					</div>
+				</div>
+				<br>
+				<div class="row">
+					<div class="col-lg-12">
+						<label>Neues Password</label>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-12 e-input-group e-float-icon-left">
+						<span class="e-input-group-icon fa fa-lock"></span>
+						<div class="e-input-in-wrap">
+							<input class="e-input" type="password" [(ngModel)]="newPassword" (focus)="focusInLeft($event.target)" (blur)="focusOutLeft($event.target)" />
+						</div>
+					</div>
+				</div>
+				<br>
+				<div class="row">
+					<div class="col-lg-12">
+						<label>Neues Password wiederholen</label>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-12 e-input-group e-float-icon-left">
+						<span class="e-input-group-icon fa fa-lock"></span>
+						<div class="e-input-in-wrap">
+							<input class="e-input" type="password" [(ngModel)]="newPasswordCopy" (focus)="focusInLeft($event.target)" (blur)="focusOutLeft($event.target)" />
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</ng-template>
+	<ng-template #footerTemplate>
+		<button ejs-button type="Button" iconCss="fa fa-check" cssClass="e-success e-round-corner" content="OK" (click)="changePwClick()"
+		 [disabled]="!sessionService.validSession"></button>
+		<button ejs-button type="Button" iconCss="fa fa-close" cssClass="e-success e-round-corner" style="margin-left: 5px"
+		 content="Abbrechen" (click)="cancelChangePwClick()" [disabled]="!sessionService.validSession"></button>
+	</ng-template>
+</ejs-dialog>

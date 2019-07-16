@@ -1,0 +1,80 @@
+.grid {
+  z-index: 0;
+}
+
+.e-grid .e-spinner-pane.e-spin-show {
+  display: none !important;
+}
+
+.gridMobile {
+  z-index: 0;
+  // Its reduced from 50px to 30px for avoiding the odd looking at bottom of the page (from syncfusion!)
+  margin-bottom: 30px;
+}
+
+.button-group {
+  display: flex !important;
+}
+
+#sideBarClose:before {
+  /*content: "\e945";*/ /* "X" works not since version 17 with bootstrap theme */
+  /*content: "\e904";*/ /* "<" works with version 17, but i need "\e945" */
+  content: "\e7fc"; /* "X" for bootstrap theme */
+}
+
+.e-sidebar .sideBarClosebtn #sideBarClose {
+  cursor: pointer;
+  line-height: 25px;
+  margin-left: 10px;
+}
+
+.e-sidebar.e-left .sideBarClosebtn #sideBarClose {
+  float: right;
+}
+
+/* ListView header alignment */
+
+#listView.e-listview .e-list-header {
+  height: auto !important;
+  width: 100% !important;
+  background-color: beige;
+  text-align: center;
+  font-size: 18px;
+  display: block !important;
+  padding-left: 0px !important;
+  padding-right: 0px !important;
+  padding-top: 10px !important;
+  padding-bottom: 10px !important;
+}
+
+#listView.e-listview .e-list-header .e-text {
+  display: block !important;
+  line-height: unset !important;
+  word-break: break-all !important;
+}
+
+#listView.e-listview.e-list-template .e-list-wrapper.e-list-multi-line .e-list-content:not(.e-text-overflow) {
+  white-space: normal !important;
+}
+
+/* grauer Background bei selektion eines ListView Items ausblenden!
+#listView .e-hover, #listView .e-active {
+  background-color: transparent !important;
+}
+*/
+
+/*
+.objGroupDescr {
+  height: auto;
+  background-color: beige;
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+  display: block;
+  white-space: normal;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  margin-bottom: 5px;
+}
+*/
+

@@ -1,0 +1,175 @@
+<app-ov-nav></app-ov-nav>
+<div style="margin:5px">
+	<app-odb-info *ngIf="curSelectedObjPropData" [display]="displayOdbInfo" [objTag]="curSelectedObjPropData.objTag"
+		(displayChange)="onOdbInfoDialogDisplayChange($event)"></app-odb-info>
+	<app-notice-edit [display]="displayNoticeEdit" [noticeSubject]="noticeSubject" (onOk)="onNoticeEditDialogOk($event)"
+		(displayChange)="onNoticeEditDialogDisplayChange($event)"></app-notice-edit>
+	<ejs-sidebar #sideBar showBackdrop="true" closeOnDocumentClick="false" type="Over">
+		<div style="text-align: center; font-size: 18px; padding: 15px;">
+			<div class="sideBarClosebtn">
+				<div style="display:inline-block">Navigationsbaum</div>
+				<span id="sideBarClose" class="e-icons" (click)="hideTree()"></span>
+			</div>
+		</div>
+		<ejs-treeview #objTreeView id="objTreeView" [fields]="treeNodeFields" expandOn="Click"
+			[animation]="treeAnimation" (nodeSelected)="nodeSelect($event)" (nodeExpanding)="nodeExpand($event)"
+			(created)="onTreeViewCreated($event)" [(expandedNodes)]="expandedNodes"></ejs-treeview>
+	</ejs-sidebar>
+	<div class="grid" *ngIf="!isMobile">
+		<ejs-tooltip target=".e-customtooltip">
+			<!--
+			<ejs-grid #grid [dataSource]='objFilterData | ejsdeepwatch:grid:"dataSource":false'
+-->
+			<ejs-grid #grid [dataSource]='objFilterData | ejsdeepwatch:grid:"dataSource":false' rowHeight="30" [allowPaging]="false" [allowSorting]="true"
+				[allowSelection]="true" [allowSorting]="true" [allowSelection]="true" [height]="gridHeight"
+				[enableVirtualization]="true" [selectionSettings]="gridSelectionSettings"
+				[pageSettings]="gridPageSettings" [sortSettings]="gridSortSettings" width="99,5%" gridLines="Both"
+				[contextMenuItems]="contextMenuItems" [allowResizing]="true"
+				(contextMenuClick)="contextMenuItemSelected($event)" (rowSelecting)="onRowSelecting($event)"
+				(queryCellInfo)="showTooltip($event)" (dataBound)="gridDatabound($event)"
+				(actionBegin)="gridActionBegin($event)" (actionComplete)="gridActionComplete($event)">
+				<e-columns>
+					<e-column field="description" headerText="Beschreibung" textAlign="Left" width="350px"
+						minWidth="20px" clipMode="EllipsisWithTooltip">
+						<ng-template #template let-objPropData>
+							<span [style.color]="objPropData.color">
+								{{objPropData.description}}
+							</span>
+						</ng-template>
+					</e-column>
+					<e-column field="tendencyCompareEntry" headerText="Tendenz" textAlign="Center" width="85px" minWidth="20px"
+						clipMode="Clip" [sortComparer]="gridSortComparerTendency">
+						<ng-template #template let-objPropData>
+							<span class="{{objPropData.tendencyIcon}}">
+							</span>
+						</ng-template>
+					</e-column>
+					<e-column field="displayValueCompareEntry" headerText="Wert" textAlign="Right" width="100px" minWidth="20px"
+						clipMode="EllipsisWithTooltip" [sortComparer]="gridSortComparerDisplayValue">
+						<ng-template #template let-objPropData>
+							<span [style.color]="objPropData.color">
+								{{objPropData.displayValue}}
+							</span>
+						</ng-template>
+					</e-column>
+					<e-column field="unit" headerText="Dim" textAlign="Left" width="80px" minWidth="20px"
+						clipMode="EllipsisWithTooltip">
+						<ng-template #template let-objPropData>
+							<span [style.color]="objPropData.color">
+								{{objPropData.unit}}
+							</span>
+						</ng-template>
+					</e-column>
+					<e-column field="prioCompareEntry" headerText="PR" textAlign="Center" width="50px" minWidth="20px"
+						clipMode="Clip" [sortComparer]="gridSortComparerPrio">
+						<ng-template #template let-objPropData>
+							<span class="{{objPropData.prioIcon}}">
+							</span>
+						</ng-template>
+					</e-column>
+					<e-column field="inAlCompareEntry" headerText="InAl" textAlign="Center" width="50px" minWidth="20px"
+						clipMode="Clip" [sortComparer]="gridSortComparerInAl">
+						<ng-template #template let-objPropData>
+							<span class="{{objPropData.inAlIcon}}">
+							</span>
+						</ng-template>
+					</e-column>
+					<e-column field="fltCompareEntry" headerText="Flt" textAlign="Center" width="50px" minWidth="20px"
+						clipMode="Clip" [sortComparer]="gridSortComparerFlt">
+						<ng-template #template let-objPropData>
+							<span class="{{objPropData.fltIcon}}">
+							</span>
+						</ng-template>
+					</e-column>
+					<e-column field="ovrCompareEntry" headerText="Ovr" textAlign="Center" width="50px" minWidth="20px"
+						clipMode="Clip" [sortComparer]="gridSortComparerOvr">
+						<ng-template #template let-objPropData>
+							<span class="{{objPropData.ovrIcon}}">
+							</span>
+						</ng-template>
+					</e-column>
+					<e-column field="oosCompareEntry" headerText="Oos" textAlign="Center" width="50px" minWidth="20px"
+						clipMode="Clip" [sortComparer]="gridSortComparerOos">
+						<ng-template #template let-objPropData>
+							<span class="{{objPropData.oosIcon}}">
+							</span>
+						</ng-template>
+					</e-column>
+					<e-column field="offlCompareEntry" headerText="OffL" textAlign="Center" width="50px" minWidth="20px"
+						clipMode="Clip" [sortComparer]="gridSortComparerOffl">
+						<ng-template #template let-objPropData>
+							<span class="{{objPropData.offLIcon}}">
+							</span>
+						</ng-template>
+					</e-column>
+					<e-column field="objName" headerText="Benutzeradresse" textAlign="Left" width="400px"
+						minWidth="20px" clipMode="EllipsisWithTooltip" [visible]="!global.hideObjName"
+						isPrimaryKey="true">
+						<ng-template #template let-objPropData>
+							<span [style.color]="objPropData.color">
+								{{objPropData.objName}}
+							</span>
+						</ng-template>
+					</e-column>
+					<e-column field="objTypeText" headerText="Objekt-Typ" textAlign="Left" width="300px" minWidth="20px"
+						clipMode="EllipsisWithTooltip">
+						<ng-template #template let-objPropData>
+							<span [style.color]="objPropData.color">
+								{{objPropData.objTypeText}}
+							</span>
+						</ng-template>
+					</e-column>
+				</e-columns>
+			</ejs-grid>
+		</ejs-tooltip>
+	</div>
+	<div class="gridMobile" *ngIf="isMobile && !objDataLoading">
+		<ejs-listview #listView id="listView" [dataSource]="objFilterData" [showHeader]="true"
+			[headerTitle]="joinedObjGroupDescr" ngClass="e-list-template" [enableVirtualization]="true"
+			(actionBegin)="listViewActionBegin()" (actionComplete)="listViewActionComplete()" [height]="listViewHeight"
+			[fields]="listViewFields">
+			<ng-template #template let-objPropData>
+				<div class="e-list-wrapper e-list-multi-line">
+					<span class="e-list-content" [style.color]="objPropData.color"
+						*ngIf="objPropData.description">{{objPropData.description}}</span>
+					<span class="e-list-content" [style.color]="objPropData.color"
+						*ngIf="!objPropData.description">.</span>
+					<span class="e-list-content" [style.color]="objPropData.color"
+						*ngIf="!global.hideObjName">{{objPropData.objName}}</span>
+					<span class="e-list-content button-group">
+						<button type="Button"
+							[ngClass]="objPropData.isCommandable ? (objPropData.isInAl ? 'e-control e-btn e-danger e-round-corner e-block' : 'e-control e-btn e-success e-round-corner e-block') : (objPropData.isInAl ? 'e-control e-btn e-danger-light e-round-corner e-block' : 'e-control e-btn e-success-light e-round-corner e-block')"
+							style="font-weight:bold" (click)="curSelectedObjPropData=objPropData;showObjectBox()">
+							<span class="{{objPropData.tendencyIcon}}" style="position: relative; top: 3px">
+							</span>
+							{{objPropData.displayValue}}
+							{{objPropData.unit}}
+						</button>
+						<button id="contextMenuButton" type="Button"
+							ngClass="e-control e-btn e-success e-round-corner mobile-option-button"
+							(click)="curSelectedObjPropData=objPropData;openContextMenu($event);">
+							<i class="fa fa-ellipsis-v"></i>
+						</button>
+					</span>
+					<span class="e-list-content">
+						<span class="{{objPropData.prioIcon}} grid-mobile-image">
+						</span>
+						<span class="{{objPropData.inAlIcon}} grid-mobile-image">
+						</span>
+						<span class="{{objPropData.fltIcon}} grid-mobile-image">
+						</span>
+						<span class="{{objPropData.ovrIcon}} grid-mobile-image">
+						</span>
+						<span class="{{objPropData.oosIcon}} grid-mobile-image">
+						</span>
+						<span class="{{objPropData.offLIcon}} grid-mobile-image">
+						</span>
+					</span>
+				</div>
+			</ng-template>
+		</ejs-listview>
+	</div>
+	<ejs-contextmenu #contextmenu [items]="contextMenuItems" (beforeOpen)="contextMenuBeforeOpen($event)"
+		(select)="contextMenuItemSelected($event)">
+	</ejs-contextmenu>
+</div>

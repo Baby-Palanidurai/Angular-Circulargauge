@@ -1,0 +1,22 @@
+#objSingleTreeView .e-list-item {
+    overflow: hidden !important;
+}
+
+#objSingleTreeView li:last-child {
+    margin-bottom: 4px !important;
+}
+
+
+
+#objSingleTreeView .e-list-item .e-text-content.e-icon-wrapper {
+    margin-bottom: -8px;
+}
+
+/*
+#objSingleTreeView .e-list-item .e-text-content {
+    margin-bottom: -12px;
+    padding: 0px;
+}
+*/
+
+

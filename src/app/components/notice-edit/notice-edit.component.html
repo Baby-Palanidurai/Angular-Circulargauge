@@ -1,0 +1,49 @@
+<ejs-dialog #noticeEditDialog header="Notiz bearbeiten" showCloseIcon="true" [(visible)]="display" isModal="true" width="400px"
+  (beforeOpen)="onBeforeOpen($event)" (open)="onOpen($event)" (close)="onClose($event)" [animationSettings]="dialogAnimationSettings">
+  <ng-template #content>
+    <div class="col-lg-12 control-section e-input-section" style="text-align:left">
+      <div class="content-wrapper">
+        <div class="row">
+          <div class="col-lg-12">
+            <label>Betreff</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-12 e-input-in-wrap">
+            <input #toFocus class="e-input" type="text" [(ngModel)]="noticeSubject" (focus)="focusInLeft($event.target)"
+              (blur)="focusOutLeft($event.target)" autofocus />
+          </div>
+        </div>
+        <br>
+        <div class="row">
+          <div class="col-lg-12">
+            <label>Priorität</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-12 e-input-in-wrap">
+            <ejs-dropdownlist id="dropDownList" [dataSource]="priorities" [fields]="priorityFields" [(value)]="selectedPriority"
+              [showClearButton]="false" cssClass="dropdownlistNoticePrio"></ejs-dropdownlist>
+          </div>
+        </div>
+        <br>
+        <div class="row">
+          <div class="col-lg-12">
+            <label>Text</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-12 e-input-in-wrap">
+            <textarea class="e-input" rows="4" [(ngModel)]="noticeText" (focus)="focusInLeft($event.target)"
+              (blur)="focusOutLeft($event.target)" style="resize: none"></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+  <ng-template #footerTemplate>
+    <button ejs-button type="Button" iconCss="fa fa-check" cssClass="e-success e-round-corner" content="OK" (click)="okClick()"></button>
+    <button ejs-button type="Button" iconCss="fa fa-close" cssClass="e-success e-round-corner" style="margin-left: 5px"
+      content="Abbrechen" (click)="cancelClick()"></button>
+  </ng-template>
+</ejs-dialog>

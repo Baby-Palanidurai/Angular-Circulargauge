@@ -1,0 +1,18 @@
+<div class="mainNav" id="mainNav">
+  <a class="active">Home</a>
+  <a (click)="showObjectViewer()">Objekt-Viewer</a>
+  <a (click)="showEventViewer()">Event-Viewer</a>
+  <a (click)="aboutDialogClick(); closeResponsiveMenu()">Info</a>
+  <a (click)="loginDialogClick(); closeResponsiveMenu()">Benutzer anmelden</a>
+  <!--
+  <a (click)="notificationSettingsDialogClick(); closeResponsiveMenu()">Benachrichtigungen</a>
+  -->
+  <a class="icon" (click)="menuToggleClick()">
+    <div class="hamburger" id="myHamburger">
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </a>
+</div>

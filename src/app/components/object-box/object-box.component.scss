@@ -1,0 +1,29 @@
+.e-switch-wrapper.square .e-switch-inner,
+.e-switch-wrapper.square .e-switch-handle {
+    border-radius: 0;
+}
+
+.e-switch-wrapper.square .e-switch-inner {
+    background-color: white;
+}
+
+.e-switch-wrapper.square .e-switch-inner.e-switch-active {
+    background-color: rgb(60,122,184);
+}
+
+.e-switch-wrapper.square .e-switch-handle {
+    background-color: gray;
+    width: 12px;
+    height: 12px;
+    margin-left: 2px;
+    box-shadow: none;
+}
+
+.e-switch-wrapper.square .e-switch-handle.e-switch-active {
+    background-color: white;
+    width: 12px;
+    height: 12px;
+    margin-left: -15px;
+    box-shadow: none;
+}
+

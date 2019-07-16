@@ -1,0 +1,183 @@
+<app-object-box-nav></app-object-box-nav>
+<app-odb-info *ngIf="objPropData" [display]="displayOdbInfo" [objTag]="objPropData.objTag"
+  (displayChange)="onOdbInfoDialogDisplayChange($event)"></app-odb-info>
+<app-notice-edit [display]="displayNoticeEdit" [noticeSubject]="noticeSubject" (onOk)="onNoticeEditDialogOk($event)"
+  (displayChange)="onNoticeEditDialogDisplayChange($event)"></app-notice-edit>
+<div id="spinnerContainer" *ngIf="firstDataLoading" style="height: 300px">
+</div>
+<div id="container" *ngIf="!firstDataLoading">
+  <ejs-splitter [orientation]="splitterOrientation" [width]='splitterWidth'>
+    <e-panes>
+      <e-pane [resizable]="false">
+        <ng-template #content>
+          <app-obj-single-tree *ngIf="objPropData" [objPropData]="objPropData"></app-obj-single-tree>
+        </ng-template>
+      </e-pane>
+      <e-pane [resizable]="false">
+        <ng-template #content>
+          <div style="display: flex; justify-content: center">
+            <!--
+            <div style="position:absolute">
+-->
+            <div style="overflow: hidden" [style.height.px]="secondPaneHeight">
+              <div style="text-align: center; font-weight: bold; margin-top: 10px; width: 368px">
+                <div *ngIf="objPropData.description">{{objPropData.description}}</div>
+                <div *ngIf="!objPropData.description">.</div>
+              </div>
+              <div>
+                <div *ngIf="isAnalog">
+                  <div style="position: relative; top: 0px">
+                    <!-- !!!!!!!! style="display: block" muss im circulargauge gesetzt sein, sonst funktioniert Pointer-Drag nicht richtig !!!!!!!! -->
+                    <ejs-circulargauge #circulargauge id="circular-container" width="368" height="200"
+                      [enablePointerDrag]="objPropData.isCommandable && isManual && hasMinMaxPV" moveToCenter="true"
+                      centerY="190" (dragMove)="dragMove($event)" (dragEnd)="dragEnd($event)" style="display: block">
+                      <e-axes>
+                        <e-axis startAngle="270" endAngle="90" radius="190%"
+                          [labelStyle]="hasMinMaxPV ? {position: 'Outside', offset: -3, autoAngle: true, hiddenLabel: (objPropData.maxPV > 99999) ? 'Last' : ''} :
+                                                      {position: 'Outside', offset: -3, autoAngle: true, font: {color: 'transparent'}}"
+                          [majorTicks]="{position: 'Outside'}" [minorTicks]="{position: 'Outside'}"
+                          [lineStyle]="{width: '1'}" [minimum]="hasMinMaxPV ? objPropData.minPV : null"
+                          [maximum]="hasMinMaxPV ? objPropData.maxPV : null">
+                          <e-ranges>
+                            <!-- Folgende Reihenfolge wegen Überlagerung von Ranges einhalten: -->
+                            <!-- 1. LowLimit -> HighLimit -->
+                            <e-range [start]="hasMinMaxPV ? (lowLimit ? lowLimit : objPropData.minPV) : 0"
+                              [end]="hasMinMaxPV ? (highLimit ? highLimit : objPropData.maxPV) : 100" radius="100%"
+                              startWidth="10" endWidth="10" color="green"></e-range>
+
+                            <!-- 2. MinPV -> LowLimit -->
+                            <e-range [start]="hasMinMaxPV ? objPropData.minPV : null"
+                              [end]="hasMinMaxPV ? (lowLimit ? lowLimit : objPropData.minPV) : null" radius="100%"
+                              startWidth="10" endWidth="10" color="red"></e-range>
+
+                            <!-- 3. HighLimit -> MaxPV -->
+                            <e-range [start]="hasMinMaxPV ? (highLimit ? highLimit : objPropData.maxPV) : null"
+                              [end]="hasMinMaxPV ? objPropData.maxPV : null" radius="100%" startWidth="10" endWidth="10"
+                              color="red"></e-range>
+
+                            <!-- Grauer Bereich zur Wertanzeige mit Pointer -->
+                            <e-range [start]="hasMinMaxPV ? objPropData.minPV : 0"
+                              [end]="hasMinMaxPV ? objPropData.maxPV : 100" radius="90%" startWidth="30" endWidth="30"
+                              color="#E0E0E0"></e-range>
+                          </e-ranges>
+                          <e-pointers>
+                            <e-pointer #grayPointer *ngIf="hasMinMaxPV" type="RangeBar" radius="90%" pointerWidth="30"
+                              color="#E0E0E0" [animation]="{enable: false}"
+                              value="hasMinMaxPV ? objPropData.maxPV : 100"></e-pointer>
+                            <e-pointer *ngIf="hasMinMaxPV" type="RangeBar" radius="90%" pointerWidth="30"
+                              color="rgb(60,122,184)" [animation]="{enable: false}" [value]="pointerValue"></e-pointer>
+                            <e-pointer *ngIf="hasMinMaxPV" type="Marker" markerShape="InvertedTriangle"
+                              [markerHeight]="15" [markerWidth]="15" radius="100%" color="rgb(60,122,184)"
+                              [animation]="{enable: false}" [value]="pointerValue"></e-pointer>
+                          </e-pointers>
+                          <e-annotations>
+                            <e-annotation *ngIf="objPropData.unit" angle="265" radius="80%" zIndex="1" [content]="objPropData.unit">
+                            </e-annotation>
+                            <e-annotation *ngIf="objPropData.unit" angle="95" radius="80%" zIndex="1" [content]="objPropData.unit">
+                            </e-annotation>
+                          </e-annotations>
+                        </e-axis>
+                      </e-axes>
+                    </ejs-circulargauge>
+                  </div>
+
+                  <div style="position: relative; top: -95px; left: 123px; width: 120px">
+                    <div *ngIf="!analogAutoButtonDisabled" style="display: flex; align-items: center; width: 120px">
+                      <label for="autoSwitch" style="padding-right: 5px">Auto</label>
+                      <ejs-switch id="autoSwitch" cssClass="square" [disabled]="!objPropData.isCommandable"
+                        [(checked)]="isManual" (change)="onSwitchChange($event)"></ejs-switch>
+                      <label for="autoSwitch" style="padding-left: 5px">Hand</label>
+                    </div>
+                    <div *ngIf="analogAutoButtonDisabled"
+                      style="display: flex; align-items: center; width: 120px; height: 20px;">
+                    </div>
+                    <div style="position: relative; top: 10px; left: -6px; width: 134px; height: 30px">
+                      <span class="{{objPropData.tendencyIcon}}" style="position: absolute; top: 8px; left: 8px">
+                      </span>
+                      <input #analogValueInput class="e-input" type="number" [(ngModel)]="analogValue"
+                        [disabled]="!objPropData.isCommandable || !isManual"
+                        [min]="hasMinMaxPV ? objPropData.minPV : null" [max]="hasMinMaxPV ? objPropData.maxPV : null"
+                        [(step)]="step" placeholder="***" (ngModelChange)="onNumericTextBoxChange($event)"
+                        style="text-align: center; width: 130px; font-weight: bold" required />
+                    </div>
+                    <div style="position: relative; top: 20px; left: -5px; width: 140px" autofocus>
+                      <span class="{{objPropData.prioIcon}} grid-mobile-image">
+                      </span>
+                      <span class="{{objPropData.inAlIcon}} grid-mobile-image">
+                      </span>
+                      <span class="{{objPropData.fltIcon}} grid-mobile-image">
+                      </span>
+                      <span class="{{objPropData.ovrIcon}} grid-mobile-image">
+                      </span>
+                      <span class="{{objPropData.oosIcon}} grid-mobile-image">
+                      </span>
+                      <span class="{{objPropData.offLIcon}} grid-mobile-image">
+                      </span>
+                    </div>
+                  </div>
+
+                </div>
+
+                <div *ngIf="!isAnalog" style="position: relative; top: -5px">
+                  <div>
+                    <div *ngIf="objPropData.isCommandable">
+                      <ejs-dropdownlist id="dropDownList" #dropDownList [dataSource]="stateTexts"
+                        [fields]="stateTextFields" [(value)]="selectedStateText" [showClearButton]="false"
+                        cssClass="dropdownlistObjBoxStateTexts" (open)="onDropDownListPopupOpen($event)"
+                        (change)="onDropDownListChange($event)"
+                        style="margin-left: auto; margin-right: auto; margin-top: 20px; margin-bottom: 20px; width: 90%"
+                        placeholder="***">
+                        <ng-template #itemTemplate let-stateText>
+                          <div style="margin: 5px; font-size: 16px"> {{stateText.text}} </div>
+                        </ng-template>
+                      </ejs-dropdownlist>
+                    </div>
+                    <div *ngIf="!objPropData.isCommandable" style="margin: auto; width: 90%; margin-bottom: 10px">
+                      <input class="e-input" type="text" [(ngModel)]="objPropData.displayValue" readonly
+                        style="text-align: center; width: 100%; font-weight: bold; margin-top: 20px; margin-bottom: 10px"
+                        placeholder="***" (focus)="focusIn($event.target)" (blur)="focusOut($event.target)" />
+                    </div>
+                  </div>
+                  <div style="margin-left: auto; margin-right: auto; margin-bottom: 10px; display: table" autofocus>
+                    <span class="{{objPropData.prioIcon}} grid-mobile-image">
+                    </span>
+                    <span class="{{objPropData.inAlIcon}} grid-mobile-image">
+                    </span>
+                    <span class="{{objPropData.fltIcon}} grid-mobile-image">
+                    </span>
+                    <span class="{{objPropData.ovrIcon}} grid-mobile-image">
+                    </span>
+                    <span class="{{objPropData.oosIcon}} grid-mobile-image">
+                    </span>
+                    <span class="{{objPropData.offLIcon}} grid-mobile-image">
+                    </span>
+                  </div>
+                  <div style="height: 30px">
+                  </div>
+                  <br>
+                  <br>
+                </div>
+                <div
+                  style="margin: auto; display: flex; justify-content: center; position: relative; top: -65px; width: 250px">
+                  <div style="display: table">
+                    <button ejs-button type="Button"
+                      [disabled]="!objPropData.isCommandable || isInitial || (!isAnalog && !selectedStateText)"
+                      cssClass="e-success e-round-corner send2io-button" (click)="writeClick()"
+                      content="Änderungen senden" style="width: 170px !important; float: left"></button>
+                    <button id="contextMenuButton" type="Button" ngClass="e-control e-btn e-success e-round-corner"
+                      (click)="openContextMenu($event)" style="margin-left: 10px">
+                      <i class="fa fa-ellipsis-v"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </e-pane>
+    </e-panes>
+  </ejs-splitter>
+</div>
+<ejs-contextmenu #contextmenu [items]="contextMenuItems" (beforeOpen)="contextMenuBeforeOpen($event)"
+  (select)="contextMenuItemSelected($event)">
+</ejs-contextmenu>
